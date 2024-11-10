@@ -1,0 +1,37 @@
+base_url: https://fakestoreapi.com
+
+get_all_products_api:
+  alias: get-all-products
+  uri: /products
+
+add_a_new_product_api:
+  alias: add-a-new-product
+  uri: /products
+  content_type: application/json
+  accept: application/json
+  request_body:
+    title: test product
+    price: 13.55
+    description: test description
+    image: https://i.pravatar.cc
+    category: electronic
+
+update_a_product_api:
+  uri: /products
+  content_type: application/json
+  accept: application/json
+
+delete_a_product_api:
+  uri: /products
+  content_type: application/json
+  accept: application/json
+
+get_all_categories_api:
+  uri: /categories
+  content_type: application/json
+  accept: application/json
+
+sort_results_api:
+  uri: /products?sort=
+  content_type: application/json
+  accept: application/json
