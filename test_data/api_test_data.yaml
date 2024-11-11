@@ -17,21 +17,30 @@ add_a_new_product_api:
     category: electronic
 
 update_a_product_api:
+  alias: update-a-product
   uri: /products
   content_type: application/json
   accept: application/json
+  product_id: 10
+  incorrect_product_id: test
+  request_body:
+    title: test product
+    price: 11.25
+    description: test description
+    image: https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg
+    category: women\'s clothing
 
 delete_a_product_api:
+  alias: delete-a-product
   uri: /products
-  content_type: application/json
-  accept: application/json
+  product_id: 19
+  incorrect_product_id: test
 
 get_all_categories_api:
-  uri: /categories
-  content_type: application/json
-  accept: application/json
+  alias: get-all-categories
+  uri: /products/categories
 
 sort_results_api:
-  uri: /products?sort=
-  content_type: application/json
-  accept: application/json
+  sort_by: desc
+  alias: sort-results
+  uri: /products

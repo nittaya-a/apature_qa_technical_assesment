@@ -29,9 +29,9 @@ Send A Post Request
     Log                  ${response.json()}
 
 Send A Put Request
-    [Arguments]    ${alias}    ${host_url}    ${uri}    ${request_body}    ${disable_warnings}=1    ${status}=Anything
+    [Arguments]    ${alias}    ${host_url}    ${uri}    ${request_body}    ${request_header}    ${disable_warnings}=1    ${status}=Anything
     Create Session       ${alias}    ${host_url}    disable_warnings=${disable_warnings}
-    ${response}          Post On Session    alias=${alias}    url=${uri}    data=${request_body}    expected_status=${status}
+    ${response}          Put On Session    alias=${alias}    url=${uri}    data=${request_body}    headers=${request_header}    expected_status=${status}
     ${response_code}     Set Variable    ${response.status_code}
     Set Test Variable    ${response_code}    ${response_code}
     [Return]             ${response.json()}
@@ -39,7 +39,7 @@ Send A Put Request
     Log                  ${response.json()}
 
 Send A Delete Request
-    [Arguments]    ${alias}    ${host_url}    ${uri}    ${status}=Anything
+    [Arguments]    ${alias}    ${host_url}    ${uri}    ${disable_warnings}=1    ${status}=Anything
     Create Session    ${alias}    ${host_url}    disable_warnings=${disable_warnings}
     ${response}       Delete On Session    alias=${alias}    url=${uri}    expected_status=${status}
     ${response_code}     Set Variable    ${response.status_code}
@@ -49,7 +49,8 @@ Send A Delete Request
     Log                  ${response.json()}
 
 Create A Request Body
-    [Arguments]    ${title}=${NONE}    ${price}=${NONE}    ${description}=${NONE}    ${category}=${NONE}    ${image}=${NONE}
+    [Arguments]    ${title}=${NONE}    ${price}=${NONE}    ${description}=${NONE}    
+    ...            ${category}=${NONE}    ${image}=${NONE}
     ${request_body}      Create Dictionary
     IF  '${title}' != '${NONE}'
         Set To Dictionary    ${request_body}      title=${title}
@@ -136,4 +137,73 @@ The Response Body Should Contain A New Product Information
         ${image}           Set Variable   ${response_body['image']}
         # Log To Console     \n${image}
         Should Be Equal    ${expected_image}    ${image}
+    END
+
+The Response Body Should Contain The Updated Product Information
+    [Arguments]    ${response_body}    ${expected_id}=${NONE}    ${expected_title}=${NONE}    ${expected_price}=${NONE}    
+    ...            ${expected_description}=${NONE}    ${expected_category}=${NONE}    ${expected_image}=${NONE}
+    IF  '${expected_id}' != '${NONE}'
+        ${id}              Set Variable      ${response_body['id']}
+        # Log To Console     \n${id}
+        Should Be Equal    ${expected_id}    ${id}
+    END
+    IF  '${expected_title}' != '${NONE}'
+        ${title}    Set Variable   ${response_body['title']}
+        # Log To Console    \n${title}
+        Should Be Equal    ${expected_title}    ${title}
+    END
+    IF  '${expected_price}' != '${NONE}'
+        ${price}           Set Variable   ${response_body['price']}
+        # Log To Console     \n${price}
+        Should Be Equal    ${expected_price}    ${price}
+    END
+    IF  '${expected_description}' != '${NONE}'
+        ${description}     Set Variable   ${response_body['description']}
+        # Log To Console     \n${description}
+        Should Be Equal    ${expected_description}    ${description}
+    END
+    IF  '${expected_category}' != '${NONE}'
+        ${category}        Set Variable   ${response_body['category']}
+        # Log To Console     \n${category}
+        Should Be Equal    ${expected_category}    ${category}
+    END
+    IF  '${expected_image}' != '${NONE}'
+        ${image}           Set Variable   ${response_body['image']}
+        # Log To Console     \n${image}
+        Should Be Equal    ${expected_image}    ${image}
+    END
+
+The Response Body Should Contain All Category Information
+    [Arguments]    ${response_body}
+    ${total_categories}    Get Length    ${response_body}
+    # Log To Console         \ntotal_categories: ${total_categories}
+    FOR  ${index}  IN RANGE  0  ${total_categories}
+        Should Not Be Empty    ${response_body}[${index}]
+    END
+
+Set Sort Parameter For Sort Results API
+    [Arguments]    ${sort}
+    ${sort_param}        Create Dictionary
+    Set To Dictionary    ${sort_param}        sort=${sort}
+    Set Test Variable    ${params}            ${sort_param}
+    # Log To Console       \n${params}
+
+The Response Body Should Contain Results Sorted By Sort Value Correctly
+    [Arguments]    ${response_body}    ${sort_value}
+    ${product_id_list}    Get Value From Json    ${response_body}    $.[*].id
+    ${total_product}      Get Length    ${product_id_list}
+    FOR  ${index}  IN RANGE  0  ${total_product} - 1
+        IF  '${sort_value}' == 'desc'
+            ${previous_id}    Set Variable    ${response_body[${index}]['id']}
+            # Log To Console    \n${previous_id}
+            ${next_id}        Set Variable    ${response_body[${index} + 1]['id']}
+            # Log To Console    \n${next_id}
+            Should Be True    ${previous_id} > ${next_id}
+        ELSE
+            ${previous_id}    Set Variable    ${response_body[${index}]['id']}
+            # Log To Console    \n${previous_id}
+            ${next_id}        Set Variable    ${response_body[${index} + 1]['id']}
+            # Log To Console    \n${next_id}
+            Should Be True    ${previous_id} < ${next_id}
+        END
     END
