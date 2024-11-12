@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.12.6 on darwin)" generated="20241112 22:29:23.307" rpa="false" schemaversion="3">
+<suite id="s1" name="Ui Test Cases" source="/Users/aum/aperture_qa_technical_assesment/test_cases/ui_test_cases.robot">
+<test id="s1-t1" name="Verify the items, price, quantity, and total when checkout with the correct first name, last name, and postal code" line="11">
+<kw name="Create Test Case ID Folder" library="ui_keywords" type="SETUP">
+<kw name="Get From List" library="Collections">
+<var>${test_case_id}</var>
+<arg>${TEST TAGS}</arg>
+<arg>2</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20241112 22:29:23.464" level="INFO">${test_case_id} = TS07-TC01</msg>
+<status status="PASS" starttime="20241112 22:29:23.464" endtime="20241112 22:29:23.464"/>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${test_case_folder_exists}</var>
+<arg>Directory Should Exist</arg>
+<arg>${EXECDIR}/test_result/ui/screenshots/${test_case_id}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Directory Should Exist" library="OperatingSystem">
+<arg>${EXECDIR}/test_result/ui/screenshots/${test_case_id}</arg>
+<doc>Fails unless the given path points to an existing directory.</doc>
+<msg timestamp="20241112 22:29:23.465" level="INFO" html="true">Directory '&lt;a href="file:///Users/aum/aperture_qa_technical_assesment/test_result/ui/screenshots/TS07-TC01"&gt;/Users/aum/aperture_qa_technical_assesment/test_result/ui/screenshots/TS07-TC01&lt;/a&gt;' exists.</msg>
+<status status="PASS" starttime="20241112 22:29:23.465" endtime="20241112 22:29:23.465"/>
+</kw>
+<msg timestamp="20241112 22:29:23.465" level="INFO">${test_case_folder_exists} = True</msg>
+<status status="PASS" starttime="20241112 22:29:23.464" endtime="20241112 22:29:23.465"/>
+</kw>
+<if>
+<branch type="IF" condition="${test_case_folder_exists} == ${False}">
+<kw name="Create Directory" library="OperatingSystem">
+<arg>${EXECDIR}/test_result/ui/screenshots/${test_case_id}</arg>
+<doc>Creates the specified directory.</doc>
+<status status="NOT RUN" starttime="20241112 22:29:23.465" endtime="20241112 22:29:23.465"/>
+</kw>
+<status status="NOT RUN" starttime="20241112 22:29:23.465" endtime="20241112 22:29:23.465"/>
+</branch>
+<status status="PASS" starttime="20241112 22:29:23.465" endtime="20241112 22:29:23.465"/>
+</if>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${test_case_id}</arg>
+<arg>${test_case_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20241112 22:29:23.465" level="INFO">${test_case_id} = TS07-TC01</msg>
+<status status="PASS" starttime="20241112 22:29:23.465" endtime="20241112 22:29:23.465"/>
+</kw>
+<status status="PASS" starttime="20241112 22:29:23.464" endtime="20241112 22:29:23.465"/>
+</kw>
+<kw name="Open A Web Browser And Navigate To Source Demo URL" library="ui_keywords">
+<arg>url=${source_demo_url}</arg>
+<arg>browser=${web_browser}</arg>
+<arg>step=1</arg>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>url=${url}</arg>
+<arg>browser=${browser}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20241112 22:29:23.465" level="INFO">Opening browser 'googlechrome' to base url 'https://www.saucedemo.com/'.</msg>
+<status status="PASS" starttime="20241112 22:29:23.465" endtime="20241112 22:29:25.789"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20241112 22:29:25.792" endtime="20241112 22:29:26.157"/>
+</kw>
+<if>
+<branch type="IF" condition="'${step}' != '${NONE}'">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<arg>filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Open A Web Browser And Navigate To Source Demo URL.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20241112 22:29:26.218" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/TS07-TC01/1%20Open%20A%20Web%20Browser%20And%20Navigate%20To%20Source%20Demo%20URL.png"&gt;&lt;img src="screenshots/TS07-TC01/1%20Open%20A%20Web%20Browser%20And%20Navigate%20To%20Source%20Demo%20URL.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20241112 22:29:26.158" endtime="20241112 22:29:26.218"/>
+</kw>
+<status status="PASS" starttime="20241112 22:29:26.158" endtime="20241112 22:29:26.218"/>
+</branch>
+<status status="PASS" starttime="20241112 22:29:26.158" endtime="20241112 22:29:26.219"/>
+</if>
+<status status="PASS" starttime="20241112 22:29:23.465" endtime="20241112 22:29:26.219"/>
+</kw>
+<kw name="Log In A Source Demo Website" library="ui_keywords">
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<arg>step=2</arg>
+<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
+<arg>${log_in_page_user_name_field}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20241112 22:29:26.219" endtime="20241112 22:29:26.225"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${log_in_page_user_name_field}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20241112 22:29:26.226" level="INFO">Typing text 'standard_user' into text field 'xpath://input[@id ='user-name']'.</msg>
+<status status="PASS" starttime="20241112 22:29:26.225" endtime="20241112 22:29:26.333"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${log_in_page_user_password_field}</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20241112 22:29:26.333" level="INFO">Typing text 'secret_sauce' into text field 'xpath://input[@id ='password']'.</msg>
+<status status="PASS" starttime="20241112 22:29:26.333" endtime="20241112 22:29:26.368"/>
+</kw>
+<if>
+<branch type="IF" condition="'${step}' != '${NONE}'">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<arg>filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Log In A Source Demo Website.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20241112 22:29:26.422" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/TS07-TC01/2%20Log%20In%20A%20Source%20Demo%20Website.png"&gt;&lt;img src="screenshots/TS07-TC01/2%20Log%20In%20A%20Source%20Demo%20Website.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20241112 22:29:26.368" endtime="20241112 22:29:26.422"/>
+</kw>
+<status status="PASS" starttime="20241112 22:29:26.368" endtime="20241112 22:29:26.422"/>
+</branch>
+<status status="PASS" starttime="20241112 22:29:26.368" endtime="20241112 22:29:26.422"/>
+</if>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${log_in_page_log_in_button}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20241112 22:29:26.423" level="INFO">Clicking element 'xpath://input[@id ='login-button']'.</msg>
+<status status="PASS" starttime="20241112 22:29:26.422" endtime="20241112 22:29:26.456"/>
+</kw>
+<status status="PASS" starttime="20241112 22:29:26.219" endtime="20241112 22:29:26.456"/>
+</kw>
+<kw name="Add Products To The Cart" library="ui_keywords">
+<arg>products=${product_list}</arg>
+<arg>step=3</arg>
+<kw name="Get Length" library="BuiltIn">
+<var>${total_product}</var>
+<arg>${products}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20241112 22:29:26.457" level="INFO">Length is 2</msg>
+<msg timestamp="20241112 22:29:26.457" level="INFO">${total_product} = 2</msg>
+<status status="PASS" starttime="20241112 22:29:26.457" endtime="20241112 22:29:26.457"/>
+</kw>
+<for flavor="IN RANGE">
+<var>${index}</var>
+<value>0</value>
+<value>${total_product}</value>
+<iter>
+<var name="${index}">0</var>
+<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
+<arg>xpath://div[text()='${products}[${index}][product_name]']/../../../div[@class='pricebar']//button[text()='Add to cart']</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20241112 22:29:26.458" endtime="20241112 22:29:26.465"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath://div[text()='${products}[${index}][product_name]']/../../../div[@class='pricebar']//button[text()='Add to cart']</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20241112 22:29:26.465" level="INFO">Clicking element 'xpath://div[text()='Sauce Labs Backpack']/../../../div[@class='pricebar']//button[text()='Add to cart']'.</msg>
+<status status="PASS" starttime="20241112 22:29:26.465" endtime="20241112 22:29:26.483"/>
+</kw>
+<status status="PASS" starttime="20241112 22:29:26.457" endtime="20241112 22:29:26.483"/>
+</iter>
+<iter>
+<var name="${index}">1</var>
+<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
+<arg>xpath://div[text()='${products}[${index}][product_name]']/../../../div[@class='pricebar']//button[text()='Add to cart']</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" starttime="20241112 22:29:26.483" endtime="20241112 22:29:26.488"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath://div[text()='${products}[${index}][product_name]']/../../../div[@class='pricebar']//button[text()='Add to cart']</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20241112 22:29:26.488" level="INFO">Clicking element 'xpath://div[text()='Sauce Labs Bike Light']/../../../div[@class='pricebar']//button[text()='Add to cart']'.</msg>
+<status status="PASS" starttime="20241112 22:29:26.488" endtime="20241112 22:29:26.503"/>
+</kw>
+<status status="PASS" starttime="20241112 22:29:26.483" endtime="20241112 22:29:26.503"/>
+</iter>
+<status status="PASS" starttime="20241112 22:29:26.457" endtime="20241112 22:29:26.503"/>
+</for>
+<if>
+<branch type="IF" condition="'${step}' != '${NONE}'">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<arg>filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Add Products To The Cart.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20241112 22:29:26.590" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/TS07-TC01/3%20Add%20Products%20To%20The%20Cart.png"&gt;&lt;img src="screenshots/TS07-TC01/3%20Add%20Products%20To%20The%20Cart.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20241112 22:29:26.503" endtime="20241112 22:29:26.590"/>
+</kw>
+<status status="PASS" starttime="20241112 22:29:26.503" endtime="20241112 22:29:26.590"/>
+</branch>
+<status status="PASS" starttime="20241112 22:29:26.503" endtime="20241112 22:29:26.590"/>
+</if>
+<status status="PASS" starttime="20241112 22:29:26.456" endtime="20241112 22:29:26.590"/>
+</kw>
+<tag>Positive</tag>
+<tag>TS07</tag>
+<tag>TS07-TC01</tag>
+<status status="PASS" starttime="20241112 22:29:23.464" endtime="20241112 22:29:26.590"/>
+</test>
+<status status="PASS" starttime="20241112 22:29:23.308" endtime="20241112 22:29:26.591"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">Positive</stat>
+<stat pass="1" fail="0" skip="0">TS07</stat>
+<stat pass="1" fail="0" skip="0">TS07-TC01</stat>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Ui Test Cases">Ui Test Cases</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
