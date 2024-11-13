@@ -14,3 +14,9 @@ password: secret_sauce
 product_list:
   - {product_name: Sauce Labs Backpack, quantity: 1, price: 29.99}
   - {product_name: Sauce Labs Bike Light, quantity: 1, price: 9.99}
+
+# Page: Checkout step 1
+
+first_name: Taylor
+last_name: Glisson
+postal_code: 10500
