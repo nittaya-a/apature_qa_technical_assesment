@@ -1,4 +1,4 @@
-# Runing Aperture QA Technical Assesment Script Instruction
+# Running Aperture QA Technical Assesment Script Instruction
 
 ### `Required List`<br><br>
 1. Visual Studio Code
