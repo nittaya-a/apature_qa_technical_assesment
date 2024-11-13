@@ -3,17 +3,13 @@ username: standard_user
 password: secret_sauce
 
 # Page: Products
-
-# Product name
-# Sauce Labs Backpack
-# Sauce Labs Bike Light
-# Sauce Labs Bolt T-Shirt
-# Sauce Labs Fleece Jacket
-# Sauce Labs Onesie
-# Test.allTheThings() T-Shirt (Red)
 product_list:
   - {product_name: Sauce Labs Backpack, quantity: 1, price: 29.99}
   - {product_name: Sauce Labs Bike Light, quantity: 1, price: 9.99}
+  # - {product_name: Sauce Labs Bike Light, quantity: 1, price: 15.99}
+  # - {product_name: Sauce Labs Fleece Jacket, quantity: 1, price: 49.99}
+  # - {product_name: Sauce Labs Onesie, quantity: 1, price: 7.99}
+  # - {product_name: Test.allTheThings() T-Shirt (Red), quantity: 1, price: 15.99}
 
 # Page: Checkout step 1
 
