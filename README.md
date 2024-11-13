@@ -1,4 +1,4 @@
-# Runing Apature QA Technical Assesment Script Instruction
+# Runing Aperture QA Technical Assesment Script Instruction
 
 ### `Required List`<br><br>
 1. Visual Studio Code
@@ -13,7 +13,7 @@
 1. Set configuration for website<br>
 
    1.1 Go to (your file location)/aperture_qa_technical_assesment/resources/ui_config.robot
-   
+
    1.2 Change ${web_browser} value on then save
    - Headless mode: headlesschrome
    - Normal mode: googlechrome
