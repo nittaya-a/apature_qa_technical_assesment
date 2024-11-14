@@ -5,14 +5,14 @@ Resource       ../keywords/api_keywords.robot
 
 *** Test Cases ***
 
-Verify A Successful Response Code And All Product Information For Get All Products API
+Validate A Successful Response Code And All Product Information For Get All Products API
     [Tags]     TS01    TS01-TC01    Positive
     ${get_all_products_api_response_body}    Send A Get Request    alias=${get_all_products_api.alias}    
     ...                                      host_url=${base_url}   uri=${get_all_products_api.uri}
     The HTTP Response Code Should Be 200
     The Response Body Should Contain All Product Information    response_body=${get_all_products_api_response_body}
 
-Verify A Successful Response Code When Inputting A Correct Request Body For Add A New Product API
+Validate A Successful Response Code When Inputting A Correct Request Body For Add A New Product API
     [Tags]     TS02    TS02-TC01    Positive
     Create A Requst Header    content_type=${add_a_new_product_api.content_type}    accept=${add_a_new_product_api.accept}
     Create A Request Body    title=${add_a_new_product_api.request_body.title}    price=${add_a_new_product_api.request_body.price}
@@ -29,7 +29,7 @@ Verify A Successful Response Code When Inputting A Correct Request Body For Add 
     ...                                                           expected_category=${add_a_new_product_api.request_body.category}  
     ...                                                           expected_image=${add_a_new_product_api.request_body.image}
 
-Verify A Successful Response Code When Inputting A Correct Product ID And Correct Request Body For Update A Product API
+Validate A Successful Response Code When Inputting A Correct Product ID And Correct Request Body For Update A Product API
     [Tags]     TS03    TS03-TC01    Positive
     Create A Requst Header    content_type=${update_a_product_api.content_type}    accept=${update_a_product_api.accept}
     Create A Request Body    title=${update_a_product_api.request_body.title}    price=${update_a_product_api.request_body.price}
@@ -47,7 +47,7 @@ Verify A Successful Response Code When Inputting A Correct Product ID And Correc
     ...                                                                 expected_category=${update_a_product_api.request_body.category}    
     ...                                                                 expected_image=${update_a_product_api.request_body.image}
 
-Verify A Bad Request Response Code When Inputting An Incorrect Product ID For Update A Product API
+Validate A Bad Request Response Code When Inputting An Incorrect Product ID For Update A Product API
     [Tags]     TS03    TS03-TC02    Negative
     Create A Requst Header    content_type=${update_a_product_api.content_type}    accept=${update_a_product_api.accept}
     Create A Request Body    title=${update_a_product_api.request_body.title}    price=${update_a_product_api.request_body.price}
@@ -58,24 +58,24 @@ Verify A Bad Request Response Code When Inputting An Incorrect Product ID For Up
     ...                                      request_body=${request_body}
     The HTTP Response Code Should Be 400
 
-Verify A Successful Response Code When Inputting A Correct Product ID For For Delete A Product API
+Validate A Successful Response Code When Inputting A Correct Product ID For For Delete A Product API
     [Tags]     TS04    TS04-TC01    Positive
     Send A Delete Request    alias=${delete_a_product_api.alias}    host_url=${base_url}    uri=${delete_a_product_api.uri}/${delete_a_product_api.product_id}
     The HTTP Response Code Should Be 200
 
-Verify A Bad Request Response Code When Inputting An Incorrect Product ID For Delete A Product API
+Validate A Bad Request Response Code When Inputting An Incorrect Product ID For Delete A Product API
     [Tags]     TS04    TS04-TC02    Negative
     Send A Delete Request    alias=${delete_a_product_api.alias}    host_url=${base_url}    uri=${delete_a_product_api.uri}/${delete_a_product_api.incorrect_product_id}
     The HTTP Response Code Should Be 400
 
-Verify A Successful Response Code And All Category Information For Get All Categories API
+Validate A Successful Response Code And All Category Information For Get All Categories API
     [Tags]     TS05    TS05-TC01    Positive
     ${get_all_categories_api_response_body}    Send A Get Request    alias=${get_all_categories_api.alias}    
     ...                                        host_url=${base_url}    uri=${get_all_categories_api.uri}
     The HTTP Response Code Should Be 200
     The Response Body Should Contain All Category Information    response_body=${get_all_categories_api_response_body}
 
-Verify A Successful Response Code When Inputting A Correct Value Of Sort For Sort Results API
+Validate A Successful Response Code When Inputting A Correct Value Of Sort For Sort Results API
     [Tags]     TS06    TS06-TC01    Positive
     Set Sort Parameter For Sort Results API    sort=${sort_results_api.sort_by}
     ${sort_results_api_response_body}    Send A Get Request    alias=${sort_results_api.alias}    host_url=${base_url}    
