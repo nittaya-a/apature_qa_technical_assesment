@@ -1,6 +1,6 @@
 # Running Aperture QA Technical Assesment Script Instruction
 
-### `Required List`<br><br>
+### `Prerequisites`<br><br>
 1. Visual Studio Code
 2. Python
 3. Chrome driver (or other web browsers driver)
@@ -10,31 +10,41 @@
    pip3 install -r .\requirements.txt
    ```
 ### `Steps`<br><br>
-1. Set configuration for website<br>
+1. Choose your web browser<br>
 
-   1.1 Go to (your file location)/aperture_qa_technical_assesment/resources/ui_config.robot
+   1.1 Go to (your cloned repository location)/aperture_qa_technical_assesment/resources/ui_config.robot
 
-   1.2 Change ${web_browser} value on then save
-   - Headless mode: headlesschrome
-   - Normal mode: googlechrome
+   1.2 The default browser is Chrome. If needed change ${web_browser} value to your preferred web browser then save
+   
 
-2. Execute the automation script
+   |Browser|Value|
+   | --- | --- |
+   | Firefox | firefox, ff |
+   | Headless Firefox | headlessfirefox |
+   | Headless Chrome | headlesschrome |
+   | Internet Explorer | internetexplorer, ie |
+   | Edge | edge |
+   | Safari | safari |
+
+2. Execute the automation test scripts
 
    ```
-   # Execute all test cases for API testing test cases
+   # Execute all API test cases
    robot -d test_result/api ./test_cases/api_test_cases.robot
    
-   # Execute all test cases for UI testing test cases
+   # Execute all UI test cases
    robot -d test_result/ui ./test_cases/ui_test_cases.robot
 
-   # Execute parallel both API testing and API testing suites
+   # Parallel execute all API and UI test cases
    pabot -d test_result ./test_cases
+   ```
 
-3. See a test result report and log from
+3. See the test result reports and logs in
    
-   3.1 Individual Execution:
-   + API testing: (your file location)/aperture_qa_technical_assesment/test_result/api
-    + UI testing: (your file location)/aperture_qa_technical_assesment/test_result/ui
-   3.2 Parallel Execution: (your file location)/aperture_qa_technical_assesment/test_result
+   3.1 For individual executions:
+   + API testing: (your cloned repository location)/aperture_qa_technical_assesment/test_result/api
+    + UI testing: (your cloned repository location)/aperture_qa_technical_assesment/test_result/ui
 
-4. See test result screenshots for UI testing from (your file location)/aperture_qa_technical_assesment/test_result/ui/screenshots
+   3.2 For parallel executions: (your cloned repository location)/aperture_qa_technical_assesment/test_result
+
+4. See the test result screenshots for UI test cases in (your cloned repository location)/aperture_qa_technical_assesment/test_result/ui/screenshots
