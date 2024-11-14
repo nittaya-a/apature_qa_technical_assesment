@@ -15,6 +15,11 @@ Create Test Case ID Folder
     END
     Set Test Variable    ${test_case_id}    ${test_case_id}
 
+Capture Page Screenshot In Case Fail On Website
+    ${test_case_id}                            Get From List    ${TEST TAGS}    2
+    Create Directory                           ${EXECDIR}/test_result/ui/screenshots/${test_case_id}
+    SeleniumLibrary.Capture Page Screenshot    filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/Fail/fail.png
+
 Open A Web Browser And Navigate To Source Demo URL
     [Arguments]    ${url}    ${browser}    ${step}=${NONE}
     SeleniumLibrary.Open Browser    url=${url}    browser=${browser}
@@ -86,7 +91,7 @@ Click Continue Button
         SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Click Continue Button.png
     END
 
-Verify The Items, Price, And Quantity On The Cart Page
+Validate The Items, Price, And Quantity On The Cart Page
     [Arguments]    ${expected_selected_items}    ${step}=${NONE}
     ${total_item}    Get Length    ${expected_selected_items}
     FOR  ${index}  IN RANGE  0  ${total_item}
@@ -97,10 +102,10 @@ Verify The Items, Price, And Quantity On The Cart Page
         Should Be Equal                                      $${expected_selected_items}[${index}][price]    ${actual_price}
     END
     IF  '${step}' != '${NONE}'
-        SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Verify The Items, Price, And Quantity On The Cart Page.png
+        SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Validate The Items, Price, And Quantity On The Cart Page.png
     END
 
-Verify The Items, Price, Quantity, Total, And Total With Tax
+Validate The Items, Price, Quantity, Total, And Total With Tax
     [Arguments]    ${expected_selected_items}    ${step}=${NONE}
     ${total_item}    Get Length    ${expected_selected_items}
     ${total_without_tax}    Set Variable    ${0}
@@ -123,35 +128,37 @@ Verify The Items, Price, Quantity, Total, And Total With Tax
     ${tax}                      Replace String    ${tax}    Tax: $    ${EMPTY}
     # Log To Console              \n${tax}
     ${total_with_tax}           Evaluate    ${total_without_tax} + ${tax}
+    ${total_with_tax}           Convert To Number    ${total_with_tax}    2
     # Log To Console              \n${total_with_tax}
     ${actual_total_with_tax}    SeleniumLibrary.Get Text    ${checkout_step_2_page_total_with_tax_text}
     # Log To Console              \n${actual_total_with_tax}
     Should Be Equal             ${actual_total_with_tax}    Total: $${total_with_tax}
     IF  '${step}' != '${NONE}'
-        SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Verify The Items, Price, Quantity, Total, And Total With Tax.png
+        SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Validate The Items, Price, Quantity, Total, And Total With Tax.png
     END
 
 Click Finish Button
     [Arguments]    ${step}=${NONE}
+    SeleniumLibrary.Scroll Element Into View 	        ${checkout_step_2_page_finish_button}
     SeleniumLibrary.Wait Until Page Contains Element    ${checkout_step_2_page_finish_button}
-    SeleniumLibrary.Click Element 	                    ${checkout_step_2_page_finish_button}
     IF  '${step}' != '${NONE}'
         SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Click Finish Button.png
     END
+    SeleniumLibrary.Click Element 	                    ${checkout_step_2_page_finish_button}
 
-Verify The Checkout Successful Message
+Validate The Checkout Successful Message
     [Arguments]    ${step}=${NONE}
     SeleniumLibrary.Wait Until Page Contains Element    ${checkout_complete_page_checkout_complete_title}
     SeleniumLibrary.Page Should Contain Element         ${checkout_complete_page_checkout_complete_title}
     SeleniumLibrary.Page Should Contain Element         ${checkout_complete_page_thank_you_for_your_order_message}
     IF  '${step}' != '${NONE}'
-        SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Verify The Checkout Successful Message.png
+        SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Validate The Checkout Successful Message.png
     END
 
-Verify The Error Message
+Validate The Error Message
     [Arguments]    ${error_message_locator}    ${step}=${NONE}
     SeleniumLibrary.Wait Until Page Contains Element    ${error_message_locator}
     SeleniumLibrary.Page Should Contain Element         ${error_message_locator}
     IF  '${step}' != '${NONE}'
-        SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Verify The Error Message.png
+        SeleniumLibrary.Capture Page Screenshot 	 filename=${EXECDIR}/test_result/ui/screenshots/${test_case_id}/${step} Validate The Error Message.png
     END
