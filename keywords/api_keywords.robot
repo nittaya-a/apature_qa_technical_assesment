@@ -1,81 +1,45 @@
 *** Keywords ***
 
 Create A Requst Header
-    [Arguments]    ${content_type}    ${accept}
-    ${request_header}    Create Dictionary       
-    Set To Dictionary    ${request_header}    Content-Type=${content_type}    
-    Set To Dictionary    ${request_header}    Accept=${accept}
+    [Arguments]    ${request_header_file}
+    ${request_header}    Get File  ${EXECDIR}/test_data/${request_header_file}
+    ${request_header}    Evaluate    json.loads("""${request_header}""")    json
     Set Test Variable    ${request_header}    ${request_header}
-    Log                  ${request_header}
-
-Send A Get Request
-    [Arguments]    ${alias}    ${host_url}    ${uri}    ${params}=${NONE}    ${disable_warnings}=1    ${status}=Anything
-    Create Session       ${alias}    ${host_url}    disable_warnings=${disable_warnings}
-    ${response}          Get On Session    alias=${alias}    url=${uri}    params=${params}    expected_status=${status}
-    ${response_code}     Set Variable    ${response.status_code}
-    Set Test Variable    ${response_code}    ${response_code}
-    [Return]             ${response.json()}
-    Log                  ${response_code}
-    Log                  ${response.json()}
-
-Send A Post Request
-    [Arguments]    ${alias}    ${host_url}    ${uri}    ${request_header}    ${request_body}    ${disable_warnings}=1    ${status}=Anything
-    Create Session       ${alias}    ${host_url}    disable_warnings=${disable_warnings}
-    ${response}          Post On Session    alias=${alias}    url=${uri}    headers=${request_header}    data=${request_body}    expected_status=${status}
-    ${response_code}     Set Variable    ${response.status_code}
-    Set Test Variable    ${response_code}    ${response_code}
-    [Return]             ${response.json()}
-    Log                  ${response_code}
-    Log                  ${response.json()}
-
-Send A Put Request
-    [Arguments]    ${alias}    ${host_url}    ${uri}    ${request_body}    ${request_header}    ${disable_warnings}=1    ${status}=Anything
-    Create Session       ${alias}    ${host_url}    disable_warnings=${disable_warnings}
-    ${response}          Put On Session    alias=${alias}    url=${uri}    data=${request_body}    headers=${request_header}    expected_status=${status}
-    ${response_code}     Set Variable    ${response.status_code}
-    Set Test Variable    ${response_code}    ${response_code}
-    [Return]             ${response.json()}
-    Log                  ${response_code}
-    Log                  ${response.json()}
-
-Send A Delete Request
-    [Arguments]    ${alias}    ${host_url}    ${uri}    ${disable_warnings}=1    ${status}=Anything
-    Create Session    ${alias}    ${host_url}    disable_warnings=${disable_warnings}
-    ${response}       Delete On Session    alias=${alias}    url=${uri}    expected_status=${status}
-    ${response_code}     Set Variable    ${response.status_code}
-    Set Test Variable    ${response_code}    ${response_code}
-    [Return]             ${response.json()}
-    Log                  ${response_code}
-    Log                  ${response.json()}
 
 Create A Request Body
-    [Arguments]    ${title}=${NONE}    ${price}=${NONE}    ${description}=${NONE}    
-    ...            ${category}=${NONE}    ${image}=${NONE}
-    ${request_body}      Create Dictionary
-    IF  '${title}' != '${NONE}'
-        Set To Dictionary    ${request_body}      title=${title}
-    END
-    IF  '${price}' != '${NONE}'
-        Set To Dictionary    ${request_body}      price=${price}
-    END
-    IF  '${description}' != '${NONE}'
-        Set To Dictionary    ${request_body}      description=${description}
-    END
-    IF  '${category}' != '${NONE}'
-        Set To Dictionary    ${request_body}      category=${category}
-    END
-    IF  '${image}' != '${NONE}'
-        Set To Dictionary    ${request_body}      image=${image}
-    END
-    ${request_body}      Evaluate           json.dumps(${request_body})    json
-    Set Test Variable    ${request_body}    ${request_body}
-    Log                  ${request_body}
+    [Arguments]    ${request_body_file}
+    ${body}              Get File  ${EXECDIR}/test_data/${request_body_file}
+    ${body}              Evaluate    json.loads("""${body}""")    json
+    Set Test Variable    ${request_body}    ${body}
 
-The HTTP Response Code Should Be 200
-    BuiltIn.Should Be Equal As Integers    ${response_code}    200
-
-The HTTP Response Code Should Be 400
-    BuiltIn.Should Be Equal As Integers    ${response_code}    400
+Send A Get Request
+    [Arguments]    ${alias}    ${host_url}    ${uri}    ${expected_status}    ${params}=${NONE}    ${disable_warnings}=1        
+    Create Session    ${alias}    ${host_url}    disable_warnings=${disable_warnings}
+    ${response}       Get On Session    alias=${alias}    url=${uri}    params=${params}    expected_status=${expected_status}
+    Log               ${response.json()}
+    [Return]          ${response.json()}
+    
+Send A Post Request
+    [Arguments]    ${alias}    ${host_url}    ${uri}    ${request_header}    ${request_body}    ${expected_status}    ${disable_warnings}=1
+    Create Session    ${alias}    ${host_url}    disable_warnings=${disable_warnings}
+    ${response}       Post On Session    alias=${alias}    url=${uri}    headers=${request_header}    json=${request_body}    expected_status=${expected_status}
+    Log               ${response.json()}
+    [Return]          ${response.json()}
+    
+Send A Put Request
+    [Arguments]    ${alias}    ${host_url}    ${uri}    ${request_body}    ${request_header}    ${expected_status}    ${disable_warnings}=1    ${status}=Anything
+    Create Session    ${alias}    ${host_url}    disable_warnings=${disable_warnings}
+    ${response}       Put On Session    alias=${alias}    url=${uri}    json=${request_body}    headers=${request_header}    expected_status=${expected_status}
+    Log               ${response.json()}
+    [Return]          ${response.json()}
+    
+Send A Delete Request
+    [Arguments]    ${alias}    ${host_url}    ${uri}    ${expected_status}    ${disable_warnings}=1
+    Create Session    ${alias}    ${host_url}    disable_warnings=${disable_warnings}
+    ${response}       Delete On Session    alias=${alias}    url=${uri}    expected_status=${expected_status}
+    Log               ${response.json()}
+    [Return]          ${response.json()}
+    
 
 The Response Body Should Contain All Product Information
     [Arguments]    ${response_body}
@@ -108,70 +72,26 @@ The Response Body Should Contain All Product Information
     END
 
 The Response Body Should Contain A New Product Information
-    [Arguments]    ${response_body}    ${expected_title}=${NONE}    ${expected_price}=${NONE}    
-    ...            ${expected_description}=${NONE}    ${expected_category}=${NONE}    ${expected_image}=${NONE}
-    ${id}                  Set Variable   ${response_body['id']}
-    # Log To Console         \n${id}
-    Should Not Be Equal    ${id}    ${EMPTY}
-    IF  '${expected_title}' != '${NONE}'
-        ${title}    Set Variable   ${response_body['title']}
-        # Log To Console    \n${title}
-        Should Be Equal    ${expected_title}    ${title}
-    END
-    IF  '${expected_price}' != '${NONE}'
-        ${price}           Set Variable   ${response_body['price']}
-        # Log To Console     \n${price}
-        Should Be Equal    ${expected_price}    ${price}
-    END
-    IF  '${expected_description}' != '${NONE}'
-        ${description}     Set Variable   ${response_body['description']}
-        # Log To Console     \n${description}
-        Should Be Equal    ${expected_description}    ${description}
-    END
-    IF  '${expected_category}' != '${NONE}'
-        ${category}        Set Variable   ${response_body['category']}
-        # Log To Console     \n${category}
-        Should Be Equal    ${expected_category}    ${category}
-    END
-    IF  '${expected_image}' != '${NONE}'
-        ${image}           Set Variable   ${response_body['image']}
-        # Log To Console     \n${image}
-        Should Be Equal    ${expected_image}    ${image}
-    END
+    [Arguments]    ${actual_response_body}    ${expected_response_body_file}
+    ${expected_response_body}     Get File  ${EXECDIR}/test_data/${expected_response_body_file}
+    ${expected_response_body}     Evaluate    json.loads("""${expected_response_body}""")    json
+    Should Not Be Equal           ${actual_response_body['id']}               ${EMPTY}
+    Should Be Equal               ${expected_response_body['title']}          ${actual_response_body['title']}
+    Should Be Equal               ${expected_response_body['price']}          ${actual_response_body['price']}
+    Should Be Equal               ${expected_response_body['description']}    ${actual_response_body['description']}
+    Should Be Equal               ${expected_response_body['category']}       ${actual_response_body['category']}
+    Should Be Equal               ${expected_response_body['image']}          ${actual_response_body['image']}
 
 The Response Body Should Contain The Updated Product Information
-    [Arguments]    ${response_body}    ${expected_id}=${NONE}    ${expected_title}=${NONE}    ${expected_price}=${NONE}    
-    ...            ${expected_description}=${NONE}    ${expected_category}=${NONE}    ${expected_image}=${NONE}
-    IF  '${expected_id}' != '${NONE}'
-        ${id}              Set Variable      ${response_body['id']}
-        # Log To Console     \n${id}
-        Should Be Equal    ${expected_id}    ${id}
-    END
-    IF  '${expected_title}' != '${NONE}'
-        ${title}    Set Variable   ${response_body['title']}
-        # Log To Console    \n${title}
-        Should Be Equal    ${expected_title}    ${title}
-    END
-    IF  '${expected_price}' != '${NONE}'
-        ${price}           Set Variable   ${response_body['price']}
-        # Log To Console     \n${price}
-        Should Be Equal    ${expected_price}    ${price}
-    END
-    IF  '${expected_description}' != '${NONE}'
-        ${description}     Set Variable   ${response_body['description']}
-        # Log To Console     \n${description}
-        Should Be Equal    ${expected_description}    ${description}
-    END
-    IF  '${expected_category}' != '${NONE}'
-        ${category}        Set Variable   ${response_body['category']}
-        # Log To Console     \n${category}
-        Should Be Equal    ${expected_category}    ${category}
-    END
-    IF  '${expected_image}' != '${NONE}'
-        ${image}           Set Variable   ${response_body['image']}
-        # Log To Console     \n${image}
-        Should Be Equal    ${expected_image}    ${image}
-    END
+    [Arguments]    ${actual_response_body}    ${expected_response_body_file}
+    ${expected_response_body}     Get File  ${EXECDIR}/test_data/${expected_response_body_file}
+    ${expected_response_body}     Evaluate    json.loads("""${expected_response_body}""")    json
+    Should Be Equal               ${expected_response_body['id']}             ${actual_response_body['id']}
+    Should Be Equal               ${expected_response_body['title']}          ${actual_response_body['title']}
+    Should Be Equal               ${expected_response_body['price']}          ${actual_response_body['price']}
+    Should Be Equal               ${expected_response_body['description']}    ${actual_response_body['description']}
+    Should Be Equal               ${expected_response_body['category']}       ${actual_response_body['category']}
+    Should Be Equal               ${expected_response_body['image']}          ${actual_response_body['image']}
 
 The Response Body Should Contain All Category Information
     [Arguments]    ${response_body}

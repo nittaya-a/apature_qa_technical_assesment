@@ -7,28 +7,12 @@ get_all_products_api:
 add_a_new_product_api:
   alias: add-a-new-product
   uri: /products
-  content_type: application/json
-  accept: application/json
-  request_body:
-    title: test product
-    price: 13.55
-    description: test description
-    image: https://i.pravatar.cc
-    category: electronic
 
 update_a_product_api:
   alias: update-a-product
   uri: /products
-  content_type: application/json
-  accept: application/json
   product_id: 10
   incorrect_product_id: test
-  request_body:
-    title: test product
-    price: 11.25
-    description: test description
-    image: https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg
-    category: women\'s clothing
 
 delete_a_product_api:
   alias: delete-a-product
