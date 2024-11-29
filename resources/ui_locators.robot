@@ -23,10 +23,6 @@ ${checkout_step_1_page_first_name_field}                          xpath://input[
 ${checkout_step_1_page_last_name_field}                           xpath://input[@id='last-name']
 ${checkout_step_1_page_postal_code_field}                         xpath://input[@id='postal-code']
 ${checkout_step_1_page_continue_button}                           xpath://input[@id='continue']
-# Error messages
-${checkout_step_1_page_first_name_is_required_error_message}      xpath://h3[text()='Error: First Name is required']
-${checkout_step_1_page_last_name_is_required_error_message}       xpath://h3[text()='Error: Last Name is required']
-${checkout_step_1_page_postal_code_is_required_error_message}     xpath://h3[text()='Error: Postal Code is required']
 
 # Page: Checkout step 2
 
@@ -40,3 +36,9 @@ ${checkout_step_2_page_finish_button}                             xpath://button
 
 ${checkout_complete_page_checkout_complete_title}                 xpath://span[text()='Checkout: Complete!']
 ${checkout_complete_page_thank_you_for_your_order_message}        xpath://h2[text()='Thank you for your order!']
+
+# Common Locators
+
+${common_product_name_locator}                                    xpath://div[text()='(product_name)']
+${common_quantity_locator}                                        xpath://div[text()='(product_name)']/../../..//div[text()='(quantity)']
+${common_price_locator}                                           xpath://div[text()='(product_name)']/../..//div[@class='inventory_item_price']
